@@ -9,5 +9,9 @@ module Videojuegos
             @precio = precio
             @ventas = ventas
         end
+
+        def to_s
+            "#{@titulo} (#{@genero.to_s}) - #{precio}€"
+        end
     end
 end
