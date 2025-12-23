@@ -16,7 +16,8 @@ module Videojuegos
         end
 
         def recaudacion_total
-            @precio * @ventas[:cantidad]
+            total_ventas = @ventas.sum { |venta| venta[:cantidad] }
+            @precio * total_ventas
         end
 
         def <=>(other)
