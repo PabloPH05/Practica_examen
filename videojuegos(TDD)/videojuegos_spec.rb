@@ -23,4 +23,10 @@ RSpec.describe Videojuegos do
             expect(@video.ventas).to eq({region: :eu, cantidad: 100})
         end
     end
+
+    context "Pruebas del metodo to_s" do
+        it "deberia devolver un string con la informacion del videojuego" do
+            expect(@video.to_s).to eq("League of Legends (moba) - 0.0€")
+        end
+    end
 end
