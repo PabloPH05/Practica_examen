@@ -29,4 +29,11 @@ RSpec.describe Videojuegos do
             expect(@video.to_s).to eq("League of Legends (moba) - 0.0€")
         end
     end
+
+    context "Pruebas de comparación" do
+        it "deberia comparar dos videojuegos por su recaudacion total" do
+            otro_video = Videojuegos::Videojuego.new("Apex Legends", :shooter, 0.0, {region: :us, cantidad: 200})
+            expect(@video == otro_video).to be true
+        end
+    end
 end
