@@ -1,5 +1,6 @@
 module Videojuegos
     class Videojuego
+        include Comparable
 
         attr_reader :titulo, :genero, :precio, :ventas
 
@@ -12,6 +13,24 @@ module Videojuegos
 
         def to_s
             "#{@titulo} (#{@genero.to_s}) - #{precio}€"
+        end
+
+        def recaudacion_total
+            @precio * @ventas[:cantidad]
+        end
+
+        def <=>(other)
+            if other.is_a? Videojuego
+                if recaudacion_total == other.recaudacion_total
+                    0
+                elsif recaudacion_total < other.recaudacion_total
+                    -1
+                else
+                    1
+                end
+            else
+                nil
+            end
         end
     end
 end
