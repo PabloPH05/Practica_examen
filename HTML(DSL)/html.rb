@@ -4,10 +4,16 @@ class HTMLGenerator
         instance_eval(&block) if block_given?
     end
 
-    [:h1, :h2, :div, :p].each do |nombre_metodo|
-        define_method(nombre_metodo) do |content|
-            @items << {tag: nombre_metodo, content: content}
-        end
+    #htmls[:h1, :h2, :p1, :div]
+
+    # htmls.each do |nombre_metodo|
+    #     define_method(nombre_metodo) do |content|
+    #         @items << {tag: nombre_metodo, content: content}
+    #     end
+    # end
+
+    def method_missing(m, *args, &block)
+        @items << {tag: m, content: args[0]}
     end
 
     def codigo
