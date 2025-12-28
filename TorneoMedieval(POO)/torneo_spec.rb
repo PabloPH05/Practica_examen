@@ -14,4 +14,11 @@ RSpec.describe Caballero do
             expect(@caballero.fuerza).to eq(8.9)
         end
     end
+
+    describe "Los objetos son comparables " do
+        it "son mayores segun el numero de victorias" do
+            @caballero2 = Caballero.new("Pepe", :medieval, 256, 9.6)
+            expect(@caballero <=> @caballero2).to be(1)
+        end
+    end
 end
