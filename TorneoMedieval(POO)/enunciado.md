@@ -7,9 +7,7 @@ Crea una clase `Caballero` que cumpla:
 3. **Funcional (Sin bucles):**
 * Crea un array con 5 caballeros.
 * `mejor_casa(caballeros)`: Devuelve la Casa (Symbol) que suma más victorias en total entre todos sus miembros.
-* *Pista:* `group_by` + `sum` + `max`.
-
-
+* `guardia_real(caballeros)`: Devuelve en foramto string ("Nombre (Casa)") y ordenados de mayor a menor aquellos caballeros que poseen una fuerza superior a 8.
 
 **Reglas:**
 
