@@ -16,5 +16,11 @@ class Caballero
             nil
         end
     end
+
+    def mejor_casa(caballeros)
+        caballeros << self
+        mejor_casa = caballeros.group_by{|i| i.casa}.map{|x,y| [x, y.map{|z| z.victorias}.sum]}.max_by{|a,b| b}[0]
+        mejor_casa
+    end
 end
         
