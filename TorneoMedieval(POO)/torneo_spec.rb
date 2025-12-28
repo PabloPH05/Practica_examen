@@ -21,4 +21,17 @@ RSpec.describe Caballero do
             expect(@caballero <=> @caballero2).to be(1)
         end
     end
+
+    describe "Podemos saber que casa lo hace mejor" do
+        it "para un array de 5 caballeros" do
+            @caballeros = [
+                Caballero.new("Pepe", :medieval, 256, 9.6),
+                Caballero.new("Isabel", :stark, 123, 6.9),
+                Caballero.new("Roberto", :stark, 256, 7.4),
+                Caballero.new("Ana", :targaryen, 456, 7.5),
+                Caballero.new("Juan", :medieval, 678, 8.1)
+            ]
+            expect(@caballero.mejor_casa(@caballeros)).to eq(:medieval)
+        end
+    end
 end
