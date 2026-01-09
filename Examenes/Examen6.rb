@@ -46,42 +46,71 @@ class MotorFraude
     def initialize(nombre, &block)
         @nombre = nombre
         @reglas = []
-
         instance_eval(&block) if block_given?
     end
 
     def bloquear_pais(pais)
-        reglas << {tipo: :bloqueo_pais, pais: pais}
+        @reglas << {tipo: :bloqueo_pais, pais: pais}
     end
 
+    # --- AQUÍ ESTÁ LA MAGIA ---
     def cuando_monto_mayor(cantidad, &block)
-        reglas << {tipo: :condicion, cantidad: cantidad}
+        # 1. Hacemos backup de la lista principal (el contexto padre)
+        reglas_padre = @reglas 
+        
+        # 2. Ponemos una lista vacía para capturar lo que pase dentro del bloque
+        @reglas = [] 
+        
+        # 3. Ejecutamos el bloque. Los métodos 'exigir' escribirán en @reglas (que ahora es la nueva lista vacía)
         instance_eval(&block) if block_given?
+        
+        # 4. Guardamos el resultado en una variable local
+        reglas_hijas = @reglas
+        
+        # 5. Restauramos la lista original
+        @reglas = reglas_padre
+        
+        # 6. Guardamos la regla padre CON sus hijas anidadas
+        @reglas << {tipo: :condicion, cantidad: cantidad, sub_reglas: reglas_hijas}
     end
+    # --------------------------
 
     def exigir(metodo)
-        reglas << {tipo: :exigir, metodo: metodo}
+        @reglas << {tipo: :exigir, metodo: metodo}
     end
 
     def bloquear_tipo(tarjeta)
-        reglas << {tipo: :bloqueo_tipo, tarjeta: tarjeta}
+        @reglas << {tipo: :bloqueo_tipo, tarjeta: tarjeta}
     end
 
     def to_s
-        salida = "REGLAS: #{nombre}\n"
-        reglas.each do |regla|
+        salida = "REGLAS: #{@nombre}\n"
+        imprimir_reglas(@reglas, salida, 0) # Delegamos a un método recursivo auxiliar
+        salida
+    end
+
+    private
+
+    # Método auxiliar para imprimir con sangría recursiva
+    def imprimir_reglas(lista_reglas, salida, nivel)
+        prefix = "  " * nivel # Sangría según profundidad
+        
+        lista_reglas.each do |regla|
             case regla[:tipo]
             when :bloqueo_pais
-                salida += "- Bloquear procedencia: #{regla[:pais]}\n"
-            when :condicion
-                salida += "- CONDICION (> #{regla[:cantidad]}): \n"
+                salida << "#{prefix}- Bloquear procedencia: #{regla[:pais]}\n"
             when :exigir
-                salida += "   * Exigir: #{regla[:metodo]}\n"
+                # Ahora sí sabemos distinguir nivel
+                bullet = nivel > 0 ? "*" : "-" 
+                salida << "#{prefix}#{bullet} Exigir: #{regla[:metodo]}\n"
             when :bloqueo_tipo
-                salida += "   * Bloquear tipo: #{regla[:tarjeta]}\n"
+                salida << "#{prefix}* Bloquear tipo: #{regla[:tarjeta]}\n"
+            when :condicion
+                salida << "#{prefix}- CONDICION (> #{regla[:cantidad]}):\n"
+                # RECURSIVIDAD: Imprimimos las hijas aumentando el nivel
+                imprimir_reglas(regla[:sub_reglas], salida, nivel + 1)
             end
         end
-        salida
     end
 end
 
