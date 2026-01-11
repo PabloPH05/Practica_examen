@@ -1,9 +1,3 @@
-¡Acepto el desafío! Vamos a preparar el **Simulacro #7**, diseñado específicamente para tocar esos cuatro pilares que mencionas.
-
-Como pediste que me "esmerara", he subido un poco el nivel de abstracción. Quiero código limpio, idiomático y robusto.
-
----
-
 # EXAMEN DE LENGUAJES Y PARADIGMAS (Simulacro #7)
 
 **Nivel:** Avanzado | **Tiempo:** 1h 30m
@@ -108,7 +102,3 @@ calcular_precio(100)
 ```
 
 * **Pregunta:** Escribe la versión "Pura" y luego cómo la llamarías desde un script principal.
-
----
-
-¡A darle caña! Cuando lo tengas, pásamelo y lo corregimos con lupa. 🧐
