@@ -51,7 +51,7 @@ Crea un DSL para generar código HTML simple pero con una sintaxis súper limpia
 
 ```ruby
 # Uso esperado:
-html = Documento.generar do
+html = Documento.new do
   body do
     div class: "contenedor", id: "main" do
       h1 "Titulo Principal"
